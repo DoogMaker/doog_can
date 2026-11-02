@@ -99,25 +99,6 @@ class Receive_Threading(threading.Thread):
             return
         if node_id in self.msg_dict:
             self.msg_dict[node_id].put(msg)
-
-    # def receive_nomal_slot(self, node_id) -> can.Message | None:
-    #     """Pop the message for a specific node ID."""
-    #     if node_id in self.msg_dict:
-    #         recv_msg = self.msg_dict[node_id].get()
-    #     else:
-    #         raise IDError(f"unknow motor node_id")
-    #     return recv_msg
-
-    # def reveive_fault_slot(self) -> can.Message | None:
-    #     """Pop a message from the fault queues."""
-    #     while not all(q.empty() for q in self.fault_msg_dict.values()):
-    #         for _, q in self.fault_msg_dict.items():
-    #             try:
-    #                 return q.get_nowait()
-    #             except queue.Empty:
-    #                 continue
-
-    #     return None
         
     def run(self) -> None:
         """Receive loop: read frames and route them into the queues."""

@@ -223,9 +223,11 @@ class Motor:
     def check_motors(self) -> FaultrCode | None:
         """Decode and return the next fault frame across all nodes, if any."""
         while not all(q.empty() for q in self.fault_msg_dict.values()):
-            for _, q in self.fault_msg_dict.items():
-                try:
-                    return self.decode_fault_code(q.get_nowait().data)
-                except queue.Empty:
-                    continue
+            for id, q in self.fault_msg_dict.items():
+                if id == self.node_id:
+                    try:
+                        return self.decode_fault_code(q.get_nowait().data)
+                    except queue.Empty:
+                        continue
+
         return None

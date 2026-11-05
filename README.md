@@ -1,1 +1,1 @@
-doog_can 通信库
+doog_can  python 通信库
